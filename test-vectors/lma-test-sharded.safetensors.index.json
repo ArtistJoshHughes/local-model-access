@@ -1,0 +1,12 @@
+{
+  "metadata": {
+    "total_size": 266240
+  },
+  "weight_map": {
+    "blk.0.weight": "lma-test-sharded-00001-of-00002.safetensors",
+    "blk.0.scale": "lma-test-sharded-00001-of-00002.safetensors",
+    "blk.1.weight": "lma-test-sharded-00001-of-00002.safetensors",
+    "blk.1.scale": "lma-test-sharded-00002-of-00002.safetensors",
+    "input.x": "lma-test-sharded-00002-of-00002.safetensors"
+  }
+}

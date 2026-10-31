@@ -1,0 +1,43 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: Apache-2.0 · Copyright 2026 Josh Hughes -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LMA reference page</title>
+<style>
+  :root { --bg: #f7f6f3; --card: #fff; --ink: #1c1d20; --sub: #5d636b; --line: #e3e1db; --accent: #2457d6; --ok: #1f7a3f; --bad: #b3261e; --code: #f0efea; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #131417; --card: #1c1f24; --ink: #eceef1; --sub: #a3a9b2; --line: #2d3138; --accent: #7aa2ff; --ok: #5fd08a; --bad: #ff8a80; --code: #24282f; color-scheme: dark; } }
+  :root[data-theme="dark"] { --bg: #131417; --card: #1c1f24; --ink: #eceef1; --sub: #a3a9b2; --line: #2d3138; --accent: #7aa2ff; --ok: #5fd08a; --bad: #ff8a80; --code: #24282f; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: calc(env(safe-area-inset-top, 0px) + 20px) 16px calc(env(safe-area-inset-bottom, 0px) + 40px); }
+  h1 { font-size: 24px; margin: 4px 0; } .sub { color: var(--sub); font-size: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; margin: 14px 0; }
+  lma-model { margin: 14px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; } td { padding: 6px 4px; border-top: 1px solid var(--line); vertical-align: top; word-break: break-word; } td:first-child { color: var(--sub); width: 38%; }
+  .ok { color: var(--ok); } .bad { color: var(--bad); }
+  textarea { width: 100%; min-height: 90px; font: 12px ui-monospace, Menlo, Consolas, monospace; background: var(--code); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 8px; }
+  details summary { cursor: pointer; font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>LMA reference page</h1>
+  <p class="sub">Local Model Access: pick a model file (or all the parts of one) from your device. This page checks it against an approved list and reads it where it is. Nothing is uploaded, and no copy is kept.</p>
+  <lma-model></lma-model>
+  <section class="card">
+    <p id="count" class="sub">Loading the approved list…</p>
+    <table id="out"></table>
+  </section>
+  <details class="card">
+    <summary>Approved list</summary>
+    <p class="sub">By default, the community registry and the test vectors. Paste your own (a JSON array of entries, or { "models": [...] }) to try a site's list.</p>
+    <textarea id="list" spellcheck="false"></textarea>
+    <p id="listMsg" class="sub"></p>
+  </details>
+  <p class="sub">Local Model Access (LMA) by artist Josh Hughes.</p>
+</main>
+<script type="module" src="reference.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+{
+ "site": {
+  "id": "demo-site-b",
+  "name": "Site B: GPU job",
+  "job": "Streams the approved model's weights from the file you pick straight into the GPU and runs a matrix-vector product over every layer."
+ },
+ "prompt": {
+  "system": "You run a GPU self-test on the user's model file. Call check_model and verify_model, then job_card for the settings, then gemv_stream and gemv_resident. Report the GB/s figures and whether every answer matched. Never ask the user to upload the file."
+ },
+ "skills": [
+  {
+   "name": "check_model",
+   "description": "Read the picked model file's header: format, name, architecture and tensor list. Reads no weights.",
+   "parameters": {
+    "type": "object",
+    "properties": {}
+   },
+   "handler": {
+    "type": "local",
+    "fn": "check_model"
+   }
+  },
+  {
+   "name": "verify_model",
+   "description": "Confirm the picked file is one of this site's approved models. Its SHA-256 is computed once and then remembered on this device.",
+   "parameters": {
+    "type": "object",
+    "properties": {}
+   },
+   "handler": {
+    "type": "local",
+    "fn": "verify_model"
+   }
+  },
+  {
+   "name": "job_card",
+   "description": "Ask this site's back end how to run the GPU job for a model (ring size, resident layers, timing).",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "model": {
+      "type": "string",
+      "description": "the approved model's file name"
+     }
+    },
+    "required": [
+     "model"
+    ]
+   },
+   "handler": {
+    "type": "http",
+    "api": "jobs",
+    "method": "GET",
+    "path": "job-card.json"
+   }
+  },
+  {
+   "name": "gemv_stream",
+   "description": "Stream every layer's weights from the file into GPU memory, one tensor at a time, and multiply each by the test vector.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "ring": {
+      "type": "integer",
+      "description": "GPU buffers to rotate the streamed weights through"
+     }
+    }
+   },
+   "handler": {
+    "type": "local",
+    "fn": "gemv_stream"
+   }
+  },
+  {
+   "name": "gemv_resident",
+   "description": "Time the matrix-vector kernel on weights kept in GPU memory.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "layers": {
+      "type": "integer"
+     },
+     "minMs": {
+      "type": "integer"
+     }
+    }
+   },
+   "handler": {
+    "type": "local",
+    "fn": "gemv_resident"
+   }
+  }
+ ],
+ "apis": {
+  "jobs": {
+   "baseUrl": "./",
+   "about": "this site's back end; in the demo it is a static file next to the page"
+  }
+ },
+ "models": [
+  {
+   "repo": "local/lma-test-vectors",
+   "revision": "make_test_models.py@2",
+   "name": "LMA test vector (small)",
+   "format": "gguf",
+   "file": "lma-test-1m.gguf",
+   "sha256": "6cbae2321f17e5eb3bb1ab6ea485303925c59824f5d4d846042c5ea57da43521",
+   "size": 795712,
+   "capabilities": [
+    "test"
+   ],
+   "license": "CC0-1.0",
+   "note": "test vector: random int8 weights (tools/make_test_models.py)"
+  },
+  {
+   "repo": "local/lma-test-vectors",
+   "revision": "make_test_models.py@2",
+   "name": "LMA test vector (st)",
+   "format": "safetensors",
+   "file": "lma-test-st.safetensors",
+   "sha256": "87ef085cb60be33e1f3281d4ad1c218b85233a2708f5a7fd41127e7c8be4d1ec",
+   "size": 267200,
+   "capabilities": [
+    "test"
+   ],
+   "license": "CC0-1.0",
+   "note": "test vector: random int8 weights (tools/make_test_models.py)"
+  },
+  {
+   "repo": "local/lma-test-vectors",
+   "revision": "make_test_models.py@2",
+   "name": "LMA test vector (big)",
+   "format": "gguf",
+   "file": "lma-test-1g.gguf",
+   "sha256": "cf4b1cdd3ca474982bcc524af690d02df053ac8216f1ac85875285fae972838e",
+   "size": 1058021024,
+   "capabilities": [
+    "test"
+   ],
+   "license": "CC0-1.0",
+   "note": "test vector: random int8 weights (tools/make_test_models.py)"
+  }
+ ],
+ "kernels": {
+  "backend": "basic"
+ },
+ "memory": {
+  "maxSliceMB": 16
+ }
+}

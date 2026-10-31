@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Josh Hughes
+cff-version: 1.2.0
+message: "If you use or implement Local Model Access (LMA), please cite it as below."
+title: "Local Model Access (LMA)"
+abstract: >-
+  A standard, with reference code, for one on-device AI model file shared by many websites. Model files are read as
+  published (GGUF and safetensors, including split and sharded models), identified by their Hugging Face identity,
+  approved by each site, verified once, and read in bounded slices without copies.
+type: software
+authors:
+  - given-names: Josh
+    family-names: Hughes
+    alias: "artist Josh Hughes"
+    website: "https://joshhughes.studio"
+version: "1.0"
+repository-code: "https://github.com/ArtistJoshHughes/local-model-access"
+url: "https://github.com/ArtistJoshHughes/local-model-access"
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+keywords:
+  - on-device AI
+  - local models
+  - web standard
+  - WebGPU
+  - GGUF
+  - safetensors

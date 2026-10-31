@@ -1,0 +1,38 @@
+{
+ "site": {
+  "id": "my-site",
+  "name": "My site",
+  "job": "One line on what this site does with the model."
+ },
+ "prompt": {
+  "system": "The pre-prompt (system prompt) your model needs for this site's job. Say which skills to use and when."
+ },
+ "skills": [
+  {
+   "name": "search_docs",
+   "description": "A skill the page runs itself: bind a JavaScript function to it with site.bind({ search_docs: async (args, ctx) => ... }).",
+   "parameters": { "type": "object", "properties": { "query": { "type": "string" } }, "required": ["query"] },
+   "handler": { "type": "local", "fn": "search_docs" }
+  },
+  {
+   "name": "order_status",
+   "description": "A skill that calls your API: GET {baseUrl}/orders/{id} and returns the JSON.",
+   "parameters": { "type": "object", "properties": { "id": { "type": "string" } }, "required": ["id"] },
+   "handler": { "type": "http", "api": "my_backend", "method": "GET", "path": "orders/{id}" }
+  }
+ ],
+ "apis": {
+  "my_backend": { "baseUrl": "https://api.example.com/v1/", "headers": {} }
+ },
+ "models": [
+  {
+   "name": "Google Gemma 4 E2B, instruction-tuned (GGUF, QAT Q4_0)",
+   "repo": "google/gemma-4-E2B-it-qat-q4_0-gguf", "revision": "675cff42a74c774d6cb76f76d8eacb49b48c9b93", "format": "gguf",
+   "file": "gemma-4-E2B_q4_0-it.gguf", "sha256": "fa401b55b07ee70a54c6dae3903c783a6e65064312529ea57175cb5f8dec6634", "size": 3349516256,
+   "capabilities": ["text"],
+   "note": "an example entry copied from registry/models.json: approve the models you have tested for your job"
+  }
+ ],
+ "kernels": { "backend": "custom", "module": "./my-kernels.js", "options": {} },
+ "memory": { "maxSliceMB": 16 }
+}

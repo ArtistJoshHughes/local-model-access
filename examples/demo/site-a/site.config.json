@@ -1,0 +1,123 @@
+{
+ "site": {
+  "id": "demo-site-a",
+  "name": "Site A: model checker",
+  "job": "Checks that the model file you pick is one this site approves, then measures how fast this device reads it."
+ },
+ "prompt": {
+  "system": "You help the user check a model file kept on their device. Call check_model first, then verify_model. Only measure speeds once the file is approved. Never ask the user to upload the file or to give this site a copy."
+ },
+ "skills": [
+  {
+   "name": "check_model",
+   "description": "Read the picked model file's header: format, name, architecture and tensor list. Reads no weights.",
+   "parameters": {
+    "type": "object",
+    "properties": {}
+   },
+   "handler": {
+    "type": "local",
+    "fn": "check_model"
+   }
+  },
+  {
+   "name": "verify_model",
+   "description": "Confirm the picked file is one of this site's approved models. Its SHA-256 is computed once and then remembered on this device.",
+   "parameters": {
+    "type": "object",
+    "properties": {}
+   },
+   "handler": {
+    "type": "local",
+    "fn": "verify_model"
+   }
+  },
+  {
+   "name": "read_speed",
+   "description": "Measure how fast the picked file reads from storage, in slices and as a stream.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "sliceMB": {
+      "type": "integer",
+      "description": "slice size in MB, at most 16"
+     }
+    }
+   },
+   "handler": {
+    "type": "local",
+    "fn": "read_speed"
+   }
+  },
+  {
+   "name": "random_reads",
+   "description": "Time reads at random places inside the model's tensors.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "count": {
+      "type": "integer"
+     },
+     "sizeKB": {
+      "type": "integer"
+     }
+    }
+   },
+   "handler": {
+    "type": "local",
+    "fn": "random_reads"
+   }
+  }
+ ],
+ "apis": {},
+ "models": [
+  {
+   "repo": "local/lma-test-vectors",
+   "revision": "make_test_models.py@2",
+   "name": "LMA test vector (small)",
+   "format": "gguf",
+   "file": "lma-test-1m.gguf",
+   "sha256": "6cbae2321f17e5eb3bb1ab6ea485303925c59824f5d4d846042c5ea57da43521",
+   "size": 795712,
+   "capabilities": [
+    "test"
+   ],
+   "license": "CC0-1.0",
+   "note": "test vector: random int8 weights (tools/make_test_models.py)"
+  },
+  {
+   "repo": "local/lma-test-vectors",
+   "revision": "make_test_models.py@2",
+   "name": "LMA test vector (st)",
+   "format": "safetensors",
+   "file": "lma-test-st.safetensors",
+   "sha256": "87ef085cb60be33e1f3281d4ad1c218b85233a2708f5a7fd41127e7c8be4d1ec",
+   "size": 267200,
+   "capabilities": [
+    "test"
+   ],
+   "license": "CC0-1.0",
+   "note": "test vector: random int8 weights (tools/make_test_models.py)"
+  },
+  {
+   "repo": "local/lma-test-vectors",
+   "revision": "make_test_models.py@2",
+   "name": "LMA test vector (big)",
+   "format": "gguf",
+   "file": "lma-test-1g.gguf",
+   "sha256": "cf4b1cdd3ca474982bcc524af690d02df053ac8216f1ac85875285fae972838e",
+   "size": 1058021024,
+   "capabilities": [
+    "test"
+   ],
+   "license": "CC0-1.0",
+   "note": "test vector: random int8 weights (tools/make_test_models.py)"
+  }
+ ],
+ "kernels": {
+  "backend": "none"
+ },
+ "memory": {
+  "maxSliceMB": 16
+ }
+}

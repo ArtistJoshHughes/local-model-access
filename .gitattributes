@@ -1,0 +1,6 @@
+# Text files use LF line endings everywhere.
+* text=auto eol=lf
+# The test vectors are checked byte for byte (sha256): never convert their line endings.
+test-vectors/** -text
+*.gguf binary
+*.safetensors binary

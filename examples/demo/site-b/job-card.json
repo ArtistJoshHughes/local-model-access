@@ -1,0 +1,6 @@
+{
+ "about": "Site B's back end, as a static file: how to run the job. The skill job_card fetches it through the 'jobs' API in site.config.json.",
+ "ring": 2,
+ "residentLayers": 8,
+ "minMs": 400
+}

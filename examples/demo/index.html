@@ -1,0 +1,30 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: Apache-2.0 · Copyright 2026 Josh Hughes -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Local Model Access demo</title>
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<main>
+  <h1>Local Model Access demo</h1>
+  <p class="sub">One model file kept in the Files app, used by two different sites for two different jobs. Neither site downloads its own copy or keeps one.</p>
+  <div id="warn" class="status warn hidden"></div>
+  <section class="card">
+    <h2>Steps</h2>
+    <ol class="steps">
+      <li><a href="get.html"><b>Get the model file</b></a>: save the test model into Files (two ways to try).</li>
+      <li><a href="site-a/index.html"><b>Site A: model checker</b></a>: pick the file, check it, measure read speed. Then pick it again.</li>
+      <li><a href="site-b/index.html"><b>Site B: GPU job</b></a>: pick the same file, stream it into the GPU, run the job.</li>
+      <li>Come back here and copy the report.</li>
+    </ol>
+  </section>
+  <section class="card"><h2>This browser</h2><div id="env" class="sub">Checking…</div></section>
+  <section class="card"><h2>Report</h2><div id="report"></div></section>
+  <p class="sub">Local Model Access (LMA) by artist Josh Hughes.</p>
+</main>
+<script type="module" src="hub.js"></script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+{
+ "site": {
+  "id": "example-help",
+  "name": "Example help centre",
+  "job": "Help & FAQ"
+ },
+ "chat": {
+  "title": "Help",
+  "subtitle": "Help & FAQ, answered on your device",
+  "starters": [
+   "How do refunds work?",
+   "/tool search_docs {\"query\": \"refund\"}"
+  ]
+ },
+ "prompt": {
+  "system": "You are the help assistant for Example help centre. Answer only from the passages search_docs returns, and name the section each answer comes from. If they do not answer the question, say so and point to the contact page."
+ },
+ "skills": [
+  {
+   "name": "search_docs",
+   "description": "Find passages in this site's help pages",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "query"
+    ]
+   },
+   "handler": {
+    "type": "local",
+    "fn": "search_docs"
+   }
+  }
+ ],
+ "apis": {},
+ "models": [
+  {
+   "name": "Google Gemma 4 E2B-it, balanced 4/8-bit (p0pc0rn pack)",
+   "repo": "JoshHughes/p0pc0rn-assistant-gemma4-e2b-q4",
+   "revision": "141f0e8665691d74f824c4469725cf19a2ded9e8",
+   "format": "pocketflux.pack/1",
+   "manifest": {
+    "file": "manifest.json",
+    "sha256": "e34bc23f7aa8c17244b53068e402a55fbc0ec68fb989b42e2615c7439d792178",
+    "size": 249447
+   },
+   "size": 3262871724,
+   "shards": 93,
+   "quant": "bal_gptq4_attn8_mlp8_4_6_12_13: MLPs GPTQ-fitted q4g32a; attention, gates, per-layer projections and the MLPs of layers 4, 6, 12 and 13 q8g64s; vision tower q8g64s; embedding (also the output head) and per-layer embeddings q4g32a; norms f32",
+   "encodings": [
+    "q8g64s.t64",
+    "q4g32a.t64",
+    "q4g32a.rows",
+    "f16",
+    "f32"
+   ],
+   "architecture": "gemma4-text",
+   "capabilities": [
+    "text",
+    "vision"
+   ],
+   "context": 131072,
+   "license": "apache-2.0",
+   "base_model": {
+    "repo": "google/gemma-4-E2B-it",
+    "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+    "file": "model.safetensors",
+    "sha256": "2db5482b20d746879bb3ef79b5203e9075a2e2b98f54ec7c2f281c1477ddc550"
+   },
+   "card": "https://huggingface.co/JoshHughes/p0pc0rn-assistant-gemma4-e2b-q4",
+   "quant_doc": "docs/QUANT-q4g32a.md",
+   "tested": "runs on iPhone in p0pc0rn: this exact pack"
+  },
+  {
+   "name": "NVIDIA Nemotron 3.5 Bolt E4B, 4-bit (p0pc0rn pack)",
+   "repo": "JoshHughes/p0pc0rn-assistant-nemotron-bolt-e4b-q4",
+   "revision": "55c29c2e59c5a5b9dbf76b458373e448ed7563a5",
+   "format": "pocketflux.pack/1",
+   "manifest": {
+    "file": "manifest.json",
+    "sha256": "af9919d7bb4a5817820ce8acb1616694c43e572b862bebac30ccc7b284cfc7f1",
+    "size": 185158
+   },
+   "size": 4675838692,
+   "shards": 90,
+   "quant": "q4all (q4g32a): every matrix 4-bit in groups of 32, the embedding (also the output head) and the per-layer embeddings included; norms f32",
+   "encodings": [
+    "q4g32a.t64",
+    "q4g32a.rows",
+    "f32"
+   ],
+   "architecture": "gemma4-text",
+   "capabilities": [
+    "text"
+   ],
+   "context": 65536,
+   "license": "other: OpenMDW 1.1",
+   "licenseLink": "https://openmdw.ai/license/1-1/",
+   "base_model": {
+    "repo": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-BF16",
+    "revision": "49843eed8db1f1c616c47af75cfd36e07aec0667",
+    "file": "model-00001-of-00001.safetensors",
+    "sha256": "15006dbbfc99dbde9cc3fb5742b08976837b6ddc9db05b1ceb8b223de8cfc520"
+   },
+   "card": "https://huggingface.co/JoshHughes/p0pc0rn-assistant-nemotron-bolt-e4b-q4",
+   "quant_doc": "docs/QUANT-q4g32a.md",
+   "tested": "runs on iPhone in p0pc0rn: this exact pack"
+  },
+  {
+   "repo": "local/lma-test-vectors",
+   "revision": "make_test_models.py@2",
+   "name": "LMA test vector (small)",
+   "format": "gguf",
+   "file": "lma-test-1m.gguf",
+   "sha256": "6cbae2321f17e5eb3bb1ab6ea485303925c59824f5d4d846042c5ea57da43521",
+   "size": 795712,
+   "capabilities": [
+    "test"
+   ],
+   "license": "CC0-1.0",
+   "note": "test vector: random int8 weights (tools/make_test_models.py)"
+  },
+  {
+   "repo": "local/lma-test-vectors",
+   "revision": "make_test_models.py@2",
+   "name": "LMA test vector (st)",
+   "format": "safetensors",
+   "file": "lma-test-st.safetensors",
+   "sha256": "87ef085cb60be33e1f3281d4ad1c218b85233a2708f5a7fd41127e7c8be4d1ec",
+   "size": 267200,
+   "capabilities": [
+    "test"
+   ],
+   "license": "CC0-1.0",
+   "note": "test vector: random int8 weights (tools/make_test_models.py)"
+  },
+  {
+   "repo": "local/lma-test-vectors",
+   "revision": "make_test_models.py@2",
+   "name": "LMA test vector (big)",
+   "format": "gguf",
+   "file": "lma-test-1g.gguf",
+   "sha256": "cf4b1cdd3ca474982bcc524af690d02df053ac8216f1ac85875285fae972838e",
+   "size": 1058021024,
+   "capabilities": [
+    "test"
+   ],
+   "license": "CC0-1.0",
+   "note": "test vector: random int8 weights (tools/make_test_models.py)"
+  },
+  {
+   "repo": "local/lma-test-vectors",
+   "revision": "make_test_models.py@2",
+   "name": "LMA test vector (pocketflux.pack)",
+   "format": "pocketflux.pack/1",
+   "manifest": {
+    "file": "manifest.json",
+    "sha256": "877dc988df6e468afc255a80a7b8b19564bfa6d8618dc6178dc0bc95ba278c96",
+    "size": 3322
+   },
+   "size": 16271,
+   "shards": 3,
+   "quant": "lma-test (q4g32a + q8g64s)",
+   "capabilities": [
+    "test"
+   ],
+   "license": "CC0-1.0",
+   "note": "test vector: random weights in every pocketflux.pack/1 encoding (tools/make_test_models.py)"
+  }
+ ],
+ "kernels": {
+  "backend": "none"
+ }
+}

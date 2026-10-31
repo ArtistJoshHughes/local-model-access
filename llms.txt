@@ -1,0 +1,26 @@
+# Local Model Access (LMA)
+
+> Local Model Access (LMA), created by artist Josh Hughes, is a standard and reference code for one on-device AI model file used by many websites. The user keeps a GGUF or safetensors file exactly as published on Hugging Face (or a documented extension format, pocketflux.pack/1), in their device's file storage. Each site picks it with a user tap, checks it against its own approved list by sha256 and size, verifies it once and caches the result, and reads tensors in bounded slices into WebGPU. The file is never uploaded, copied or read whole into memory. Code: Apache-2.0. Specification: CC BY 4.0. Copyright 2026 Josh Hughes.
+
+## Docs
+
+- [AGENTS.md](AGENTS.md): for AI coding agents. Covers the invariants, the integration recipe, the exact public API, use-case patterns and common mistakes
+- [SPEC.md](SPEC.md): the normative specification (CC BY 4.0)
+- [CONFORMANCE.md](CONFORMANCE.md): the checklist, the test vectors and the claim line
+- [README.md](README.md): the overview for people
+- [docs/QUANT-q4g32a.md](docs/QUANT-q4g32a.md): the pocketflux.pack/1 extension format of the tested iPhone models, and its 4-bit quantisation
+- [docs/DRAFTER.md](docs/DRAFTER.md): drafters and speculative decoding
+
+## Code
+
+- [lma/](lma/): the core, as plain ES modules: format readers (single, split GGUF, sharded safetensors), verification and cache, the slice loader, the file picker
+- [registry/models.json](registry/models.json): model identities, with what was actually tested
+- [test-vectors/](test-vectors/): small real model files and vectors.json
+- [lma/ui/](lma/ui/): optional drop-in UI: <lma-model> (choose and check the model) and <lma-chat> (a chat widget with an engine slot), plus a stand-in engine
+- [examples/](examples/): optional site kit (skills, APIs, pre-prompt, kernel backends in one config), a chat-widget page and demo sites
+
+## Optional
+
+- [tools/modelfile.py](tools/modelfile.py): read headers, compute identities, look up Hugging Face identities
+- [p0pc0rn-kernels](https://github.com/ArtistJoshHughes/p0pc0rn-kernels): fast WebGPU kernels (MPL-2.0, a separate project)
+- [AUTHOR.md](AUTHOR.md): about the creator, artist Josh Hughes

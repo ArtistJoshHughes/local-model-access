@@ -1,0 +1,633 @@
+{
+ "about": "Local Model Access (LMA) conformance test vectors. See CONFORMANCE.md. Each vector is one model (one or more files) with its expected identity and header facts; 'refuse' lists inputs a conforming reader must reject, with the error code.",
+ "spec": "1.0",
+ "vectors": [
+  {
+   "id": "small",
+   "label": "small GGUF (under 1 MB)",
+   "format": "gguf",
+   "files": [
+    {
+     "file": "lma-test-1m.gguf",
+     "size": 795712,
+     "sha256": "6cbae2321f17e5eb3bb1ab6ea485303925c59824f5d4d846042c5ea57da43521"
+    }
+   ],
+   "header": {
+    "name": "LMA test vector (small)",
+    "architecture": "lma-test-gemv",
+    "tensors": 7,
+    "parts": 1,
+    "tensorsSeen": [
+     {
+      "part": 0,
+      "name": "blk.0.weight",
+      "dtype": "i8",
+      "shape": [
+       512,
+       512
+      ],
+      "offset": 1088,
+      "size": 262144
+     },
+     {
+      "part": 0,
+      "name": "input.x",
+      "dtype": "i32",
+      "shape": [
+       512
+      ],
+      "offset": 793664,
+      "size": 2048
+     }
+    ]
+   },
+   "gemv": {
+    "rule": "acc[r] = sum_c weight[r,c] * x[c] (exact int32); y[r] = acc[r] * scale[r]; sum = sum_r acc[r]; wsum = sum_r acc[r] * (r % 7 + 1)",
+    "sum": [
+     21145,
+     -17494,
+     -66748
+    ],
+    "wsum": [
+     72128,
+     -109544,
+     -324559
+    ],
+    "layers": 3,
+    "rows": 512,
+    "cols": 512,
+    "x": "input.x",
+    "weight": "blk.{N}.weight",
+    "scale": "blk.{N}.scale"
+   },
+   "identity": {
+    "repo": "local/lma-test-vectors",
+    "revision": "make_test_models.py@2",
+    "name": "LMA test vector (small)",
+    "format": "gguf",
+    "file": "lma-test-1m.gguf",
+    "sha256": "6cbae2321f17e5eb3bb1ab6ea485303925c59824f5d4d846042c5ea57da43521",
+    "size": 795712,
+    "capabilities": [
+     "test"
+    ],
+    "license": "CC0-1.0",
+    "note": "test vector: random int8 weights (tools/make_test_models.py)"
+   }
+  },
+  {
+   "id": "st",
+   "label": "small safetensors (under 1 MB)",
+   "format": "safetensors",
+   "files": [
+    {
+     "file": "lma-test-st.safetensors",
+     "size": 267200,
+     "sha256": "87ef085cb60be33e1f3281d4ad1c218b85233a2708f5a7fd41127e7c8be4d1ec"
+    }
+   ],
+   "header": {
+    "name": "LMA test vector (st)",
+    "architecture": "lma-test-gemv",
+    "tensors": 5,
+    "parts": 1,
+    "tensorsSeen": [
+     {
+      "part": 0,
+      "name": "blk.0.weight",
+      "dtype": "i8",
+      "shape": [
+       256,
+       512
+      ],
+      "offset": 960,
+      "size": 131072
+     },
+     {
+      "part": 0,
+      "name": "input.x",
+      "dtype": "i32",
+      "shape": [
+       512
+      ],
+      "offset": 265152,
+      "size": 2048
+     }
+    ]
+   },
+   "gemv": {
+    "rule": "acc[r] = sum_c weight[r,c] * x[c] (exact int32); y[r] = acc[r] * scale[r]; sum = sum_r acc[r]; wsum = sum_r acc[r] * (r % 7 + 1)",
+    "sum": [
+     -16007,
+     6369
+    ],
+    "wsum": [
+     -109529,
+     19800
+    ],
+    "layers": 2,
+    "rows": 256,
+    "cols": 512,
+    "x": "input.x",
+    "weight": "blk.{N}.weight",
+    "scale": "blk.{N}.scale"
+   },
+   "identity": {
+    "repo": "local/lma-test-vectors",
+    "revision": "make_test_models.py@2",
+    "name": "LMA test vector (st)",
+    "format": "safetensors",
+    "file": "lma-test-st.safetensors",
+    "sha256": "87ef085cb60be33e1f3281d4ad1c218b85233a2708f5a7fd41127e7c8be4d1ec",
+    "size": 267200,
+    "capabilities": [
+     "test"
+    ],
+    "license": "CC0-1.0",
+    "note": "test vector: random int8 weights (tools/make_test_models.py)"
+   }
+  },
+  {
+   "id": "split",
+   "label": "split GGUF (2 parts)",
+   "format": "gguf",
+   "files": [
+    {
+     "file": "lma-test-split-00001-of-00002.gguf",
+     "size": 529408,
+     "sha256": "db37feefc8a63d4fbc6d3299cca0ca64523d85d86f3630ad0e3e916e4f187f37"
+    },
+    {
+     "file": "lma-test-split-00002-of-00002.gguf",
+     "size": 266496,
+     "sha256": "cfae3297e88f9f6c19f26b40d87c6fbc737b1b202550cd63e049787f011c83e3"
+    }
+   ],
+   "header": {
+    "name": "LMA test vector (split)",
+    "architecture": "lma-test-gemv",
+    "tensors": 7,
+    "parts": 2,
+    "tensorsSeen": [
+     {
+      "part": 0,
+      "name": "blk.0.weight",
+      "dtype": "i8",
+      "shape": [
+       512,
+       512
+      ],
+      "offset": 1024,
+      "size": 262144
+     },
+     {
+      "part": 0,
+      "name": "blk.1.scale",
+      "dtype": "f32",
+      "shape": [
+       512
+      ],
+      "offset": 527360,
+      "size": 2048
+     },
+     {
+      "part": 1,
+      "name": "blk.2.weight",
+      "dtype": "i8",
+      "shape": [
+       512,
+       512
+      ],
+      "offset": 256,
+      "size": 262144
+     },
+     {
+      "part": 1,
+      "name": "input.x",
+      "dtype": "i32",
+      "shape": [
+       512
+      ],
+      "offset": 264448,
+      "size": 2048
+     }
+    ]
+   },
+   "gemv": {
+    "rule": "acc[r] = sum_c weight[r,c] * x[c] (exact int32); y[r] = acc[r] * scale[r]; sum = sum_r acc[r]; wsum = sum_r acc[r] * (r % 7 + 1)",
+    "sum": [
+     24778,
+     -59304,
+     48397
+    ],
+    "wsum": [
+     181087,
+     -382598,
+     102340
+    ],
+    "layers": 3,
+    "rows": 512,
+    "cols": 512,
+    "x": "input.x",
+    "weight": "blk.{N}.weight",
+    "scale": "blk.{N}.scale"
+   },
+   "identity": {
+    "repo": "local/lma-test-vectors",
+    "revision": "make_test_models.py@2",
+    "name": "LMA test vector (split)",
+    "format": "gguf",
+    "files": [
+     {
+      "file": "lma-test-split-00001-of-00002.gguf",
+      "sha256": "db37feefc8a63d4fbc6d3299cca0ca64523d85d86f3630ad0e3e916e4f187f37",
+      "size": 529408
+     },
+     {
+      "file": "lma-test-split-00002-of-00002.gguf",
+      "sha256": "cfae3297e88f9f6c19f26b40d87c6fbc737b1b202550cd63e049787f011c83e3",
+      "size": 266496
+     }
+    ],
+    "capabilities": [
+     "test"
+    ],
+    "license": "CC0-1.0",
+    "note": "test vector: random int8 weights (tools/make_test_models.py)"
+   }
+  },
+  {
+   "id": "sharded",
+   "label": "sharded safetensors (2 shards + index)",
+   "format": "safetensors",
+   "files": [
+    {
+     "file": "lma-test-sharded-00001-of-00002.safetensors",
+     "size": 263992,
+     "sha256": "62f7c0a7a545a3b20530d6c451f42270c4630c69f7a6e5d0ba9d1663864f9e68"
+    },
+    {
+     "file": "lma-test-sharded-00002-of-00002.safetensors",
+     "size": 3216,
+     "sha256": "434e527a3795fc258a4df5cfa9d84e288c02aa28311d18794368a08b66ebbecc"
+    }
+   ],
+   "index": {
+    "file": "lma-test-sharded.safetensors.index.json",
+    "size": 399,
+    "sha256": "71aef6a348cf6a5e0b8c4dee4a0fa573e42a8437da16ecf5c4a438dd1ecf8903"
+   },
+   "header": {
+    "name": "LMA test vector (sharded)",
+    "architecture": "lma-test-gemv",
+    "tensors": 5,
+    "parts": 2,
+    "tensorsSeen": [
+     {
+      "part": 0,
+      "name": "blk.0.weight",
+      "dtype": "i8",
+      "shape": [
+       256,
+       512
+      ],
+      "offset": 824,
+      "size": 131072
+     },
+     {
+      "part": 0,
+      "name": "blk.1.weight",
+      "dtype": "i8",
+      "shape": [
+       256,
+       512
+      ],
+      "offset": 132920,
+      "size": 131072
+     },
+     {
+      "part": 1,
+      "name": "blk.1.scale",
+      "dtype": "f32",
+      "shape": [
+       256
+      ],
+      "offset": 144,
+      "size": 1024
+     },
+     {
+      "part": 1,
+      "name": "input.x",
+      "dtype": "i32",
+      "shape": [
+       512
+      ],
+      "offset": 1168,
+      "size": 2048
+     }
+    ]
+   },
+   "gemv": {
+    "rule": "acc[r] = sum_c weight[r,c] * x[c] (exact int32); y[r] = acc[r] * scale[r]; sum = sum_r acc[r]; wsum = sum_r acc[r] * (r % 7 + 1)",
+    "sum": [
+     8818,
+     46747
+    ],
+    "wsum": [
+     33604,
+     118539
+    ],
+    "layers": 2,
+    "rows": 256,
+    "cols": 512,
+    "x": "input.x",
+    "weight": "blk.{N}.weight",
+    "scale": "blk.{N}.scale"
+   },
+   "identity": {
+    "repo": "local/lma-test-vectors",
+    "revision": "make_test_models.py@2",
+    "name": "LMA test vector (sharded)",
+    "format": "safetensors",
+    "files": [
+     {
+      "file": "lma-test-sharded-00001-of-00002.safetensors",
+      "sha256": "62f7c0a7a545a3b20530d6c451f42270c4630c69f7a6e5d0ba9d1663864f9e68",
+      "size": 263992
+     },
+     {
+      "file": "lma-test-sharded-00002-of-00002.safetensors",
+      "sha256": "434e527a3795fc258a4df5cfa9d84e288c02aa28311d18794368a08b66ebbecc",
+      "size": 3216
+     }
+    ],
+    "capabilities": [
+     "test"
+    ],
+    "license": "CC0-1.0",
+    "note": "test vector: random int8 weights (tools/make_test_models.py)"
+   }
+  }
+ ],
+ "refuse": [
+  {
+   "id": "not-a-model",
+   "input": "4096 random bytes",
+   "code": "not-model"
+  },
+  {
+   "id": "truncated",
+   "input": "lma-test-1m.gguf without its last 1000 bytes",
+   "code": "truncated"
+  },
+  {
+   "id": "header-cut",
+   "input": "the first 200 bytes of lma-test-1m.gguf",
+   "code": "truncated"
+  },
+  {
+   "id": "bad-version",
+   "input": "lma-test-1m.gguf with bytes 4-7 set to 09 00 00 00",
+   "code": "version"
+  },
+  {
+   "id": "missing-part",
+   "input": "only part 1 of the split GGUF",
+   "code": "missing-part"
+  },
+  {
+   "id": "missing-shard",
+   "input": "shard 1 of the sharded safetensors with its index",
+   "code": "missing-part"
+  },
+  {
+   "id": "changed-byte",
+   "input": "lma-test-1m.gguf with byte 400000 changed",
+   "result": "the header reads, the sha256 matches no approved identity: not approved"
+  },
+  {
+   "id": "pack-missing-shard",
+   "input": "the pack's manifest.json without ple.rows.pfw",
+   "code": "missing-part"
+  },
+  {
+   "id": "pack-short-shard",
+   "input": "the pack with lm.global.pfw cut short by 16 bytes",
+   "code": "truncated"
+  },
+  {
+   "id": "pack-changed-chunk",
+   "input": "the pack with one byte of lm.global.pfw changed",
+   "result": "verifyModel (full) refuses it; verifyChunk is false for that chunk only"
+  }
+ ],
+ "packs": [
+  {
+   "id": "pack",
+   "label": "pocketflux.pack/1 (extension, SPEC.md 2.2)",
+   "format": "pocketflux.pack",
+   "files": [
+    {
+     "file": "lma-test-pack/manifest.json",
+     "size": 3322,
+     "sha256": "877dc988df6e468afc255a80a7b8b19564bfa6d8618dc6178dc0bc95ba278c96"
+    },
+    {
+     "file": "lma-test-pack/lm.global.pfw",
+     "size": 14336,
+     "sha256": "12237067faf7d654b8d31ae1cf358c13c902682a46129b3112a51379142386b8"
+    },
+    {
+     "file": "lma-test-pack/ple.rows.pfw",
+     "size": 1824,
+     "sha256": "e8c6c1cca9f4784ea39d989fab15f41ff4cbc1d9132f24d52f88563a848ef510"
+    },
+    {
+     "file": "lma-test-pack/tokenizer/tokenizer_meta.json",
+     "size": 111,
+     "sha256": "402b8a66b0841b0ae920d1f0d7bca0fc806794abedcdb4309786a9eb9830c3cf"
+    }
+   ],
+   "identity": {
+    "repo": "local/lma-test-vectors",
+    "revision": "make_test_models.py@2",
+    "name": "LMA test vector (pocketflux.pack)",
+    "format": "pocketflux.pack/1",
+    "manifest": {
+     "file": "manifest.json",
+     "sha256": "877dc988df6e468afc255a80a7b8b19564bfa6d8618dc6178dc0bc95ba278c96",
+     "size": 3322
+    },
+    "size": 16271,
+    "shards": 3,
+    "quant": "lma-test (q4g32a + q8g64s)",
+    "capabilities": [
+     "test"
+    ],
+    "license": "CC0-1.0",
+    "note": "test vector: random weights in every pocketflux.pack/1 encoding (tools/make_test_models.py)"
+   },
+   "chunks": {
+    "lm.global.pfw": 4,
+    "ple.rows.pfw": 1,
+    "tokenizer/tokenizer_meta.json": 1
+   },
+   "tensors": {
+    "layers.0.mlp.gate_up_proj.weight": {
+     "enc": "q4g32a.t64",
+     "shape": [
+      128,
+      64
+     ],
+     "first": [
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25,
+      0.25
+     ],
+     "sum": -11.085693359375
+    },
+    "layers.0.self_attn.qkv_proj.weight": {
+     "enc": "q8g64s.t64",
+     "shape": [
+      64,
+      128
+     ],
+     "first": [
+      -0.3886070251464844,
+      0.40038299560546875,
+      0.06673049926757812,
+      -0.3297271728515625,
+      -0.10205841064453125,
+      -0.41608428955078125,
+      0.471038818359375,
+      -0.4435615539550781
+     ],
+     "sum": -24.877605438232422
+    },
+    "norm.weight": {
+     "enc": "f32",
+     "shape": [
+      64
+     ],
+     "first": [
+      1.203639268875122,
+      0.8202258348464966,
+      0.9030212759971619,
+      1.0038986206054688,
+      1.429503321647644,
+      0.8677881956100464,
+      1.2666285037994385,
+      1.1658426523208618
+     ],
+     "sum": 62.375539779663086
+    },
+    "position_table": {
+     "enc": "f16",
+     "shape": [
+      8,
+      16
+     ],
+     "first": [
+      0.443115234375,
+      -0.00823211669921875,
+      0.1446533203125,
+      0.467041015625,
+      -0.1572265625,
+      0.3837890625,
+      -0.00635528564453125,
+      -0.39111328125
+     ],
+     "sum": -3.5137252807617188
+    },
+    "token_ordering": {
+     "enc": "u32",
+     "shape": [
+      64
+     ],
+     "first": [
+      51.0,
+      14.0,
+      50.0,
+      11.0,
+      58.0,
+      22.0,
+      28.0,
+      29.0
+     ],
+     "sum": 2148.0
+    },
+    "embed_tokens_per_layer.weight": {
+     "enc": "q4g32a.rows",
+     "shape": [
+      16,
+      64
+     ],
+     "first": [
+      0.26513671875,
+      0.01171875,
+      0.3284912109375,
+      -0.0516357421875,
+      0.3284912109375,
+      0.391845703125,
+      -0.3050537109375,
+      0.138427734375
+     ],
+     "sum": -1.688751220703125
+    },
+    "embed_rows_q8": {
+     "enc": "q8g64s.rows",
+     "shape": [
+      8,
+      128
+     ],
+     "first": [
+      -0.30998992919921875,
+      0.3591346740722656,
+      -0.18145751953125,
+      -0.2532844543457031,
+      0.3591346740722656,
+      0.30242919921875,
+      0.1058502197265625,
+      -0.40071868896484375
+     ],
+     "sum": -2.156496047973633
+    }
+   }
+  }
+ ],
+ "large": [
+  {
+   "id": "big",
+   "label": "big GGUF (about 1 GB)",
+   "generate": "python tools/make_test_models.py DIR --big",
+   "format": "gguf",
+   "files": [
+    {
+     "file": "lma-test-1g.gguf",
+     "size": 1058021024,
+     "sha256": "cf4b1cdd3ca474982bcc524af690d02df053ac8216f1ac85875285fae972838e"
+    }
+   ],
+   "identity": {
+    "repo": "local/lma-test-vectors",
+    "revision": "make_test_models.py@2",
+    "name": "LMA test vector (big)",
+    "format": "gguf",
+    "file": "lma-test-1g.gguf",
+    "sha256": "cf4b1cdd3ca474982bcc524af690d02df053ac8216f1ac85875285fae972838e",
+    "size": 1058021024,
+    "capabilities": [
+     "test"
+    ],
+    "license": "CC0-1.0",
+    "note": "test vector: random int8 weights (tools/make_test_models.py)"
+   }
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+Local Model Access (LMA) - a standard for one on-device model file shared by many websites. Created by artist Josh Hughes. Copyright 2026 Josh Hughes.
+
+Local Model Access is a separate work by Josh Hughes, released under Apache-2.0 (code) and CC BY 4.0 (spec). It contains no code from the p0pc0rn app; p0pc0rn and its engine remain under the p0pc0rn licence.
+
+The code in this repository is licensed under the Apache License, Version 2.0 (LICENSE).
+The specification and docs (SPEC.md, CONFORMANCE.md, AGENTS.md, llms.txt and docs/) are licensed under the Creative Commons Attribution 4.0 International licence (LICENSES/CC-BY-4.0.txt).
+The test vectors (test-vectors/) are dedicated to the public domain under CC0-1.0.
+AUTHOR.md reproduces the creator's biography from joshhughes.studio/bio and is not covered by these licences.

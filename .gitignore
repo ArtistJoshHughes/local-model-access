@@ -1,0 +1,5 @@
+# generated demo models (tools/make_test_models.py): large, and reproducible byte for byte
+examples/demo/models/
+__pycache__/
+*.part
+node_modules/

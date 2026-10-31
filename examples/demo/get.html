@@ -1,0 +1,27 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: Apache-2.0 · Copyright 2026 Josh Hughes -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Get the model file</title>
+<link rel="stylesheet" href="demo.css">
+</head>
+<body>
+<main>
+  <p class="crumb"><a href="index.html">Local Model Access demo</a></p>
+  <h1>Get the model file</h1>
+  <p class="sub">Put one copy of the model in the Files app. Every site that approves it can then use that same copy.</p>
+  <div id="warn" class="status warn hidden"></div>
+  <section class="card">
+    <h2>Two ways to save it</h2>
+    <p><b>B. Download with the browser (recommended).</b> A normal download: on iPhone, Safari's own downloader saves it to <i>Files</i> &rsaquo; <i>Downloads</i> and keeps going in the background. It works in a Safari tab, not in a Home Screen app. You can move it to <i>On My iPhone</i> &rsaquo; <i>Models</i> afterwards.</p>
+    <p><b>A. Download into this page, then Save to Files (small files only).</b> A progress bar, and it resumes if it stops; then <i>Save to Files</i>. On iOS, very large files fail through the share sheet, so use B for real models.</p>
+    <p class="sub" id="store"></p>
+  </section>
+  <div id="models"></div>
+  <section class="card"><h2>Report</h2><div id="report"></div></section>
+</main>
+<script type="module" src="get.js"></script>
+</body>
+</html>

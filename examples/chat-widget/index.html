@@ -1,0 +1,43 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: Apache-2.0 · Copyright 2026 Josh Hughes -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Example help centre</title>
+<style>
+  :root { --bg: #f7f6f3; --ink: #1c1d20; --sub: #5d636b; --line: #e3e1db; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #131417; --ink: #eceef1; --sub: #a3a9b2; --line: #2d3138; color-scheme: dark; } }
+  :root[data-theme="dark"] { --bg: #131417; --ink: #eceef1; --sub: #a3a9b2; --line: #2d3138; color-scheme: dark; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  main { max-width: 680px; margin: 0 auto; padding: 32px 16px 120px; }
+  h1 { font-size: 26px; margin: 0 0 4px; } h2 { font-size: 17px; margin: 22px 0 4px; } .sub { color: var(--sub); }
+  section { border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Example help centre</h1>
+  <p class="sub">A plain page with the &lt;lma-chat&gt; widget in the lower right. The engine here is the stand-in: it checks your model file and proves the wiring, but it does not run the model.</p>
+  <section data-faq><h2>Refunds</h2><p>Orders can be refunded within 30 days. Open the order, choose Refund, and the money returns to the original payment method within five working days.</p></section>
+  <section data-faq><h2>Delivery</h2><p>Standard delivery takes three to five working days. Tracking appears in the order once it ships.</p></section>
+  <section data-faq><h2>Accounts</h2><p>You can change your email or password under Settings, Account. Deleting an account removes its order history after 30 days.</p></section>
+</main>
+<lma-chat config="./site.config.json"></lma-chat>
+<script type="module">
+  import '../../lma/ui/lma-chat.js';
+  import { createStandIn } from '../../lma/ui/engines/stand-in.js';
+  import { loadSite } from '../site-kit/site.js';
+
+  const chat = document.querySelector('lma-chat');
+  chat.engine = createStandIn();                       // swap in a real engine with the same slot (see AGENTS.md)
+  const site = await loadSite('./site.config.json');   // optional: the site kit's skills become the chat's tools
+  site.bind({
+    search_docs: ({ query }) => [...document.querySelectorAll('[data-faq]')]
+      .filter((s) => s.textContent.toLowerCase().includes(String(query).toLowerCase()))
+      .map((s) => ({ section: s.querySelector('h2').textContent, text: s.querySelector('p').textContent })),
+  });
+  chat.site = site;
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+{
+ "note": "a pack may carry other files (a tokenizer, a chat template); the manifest lists and hashes them"
+}

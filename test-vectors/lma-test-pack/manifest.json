@@ -1,0 +1,179 @@
+{
+ "format": "pocketflux.pack",
+ "format_version": 1,
+ "pack_id": "lma-test-pack",
+ "pack_version": "1",
+ "model": {
+  "id": "lma-test-pack",
+  "arch": "lma-test"
+ },
+ "encodings": {
+  "q4g32a.t64": "docs/QUANT-q4g32a.md",
+  "q8g64s.t64": "docs/QUANT-q4g32a.md",
+  "q4g32a.rows": "docs/QUANT-q4g32a.md",
+  "q8g64s.rows": "docs/QUANT-q4g32a.md",
+  "f16": "docs/QUANT-q4g32a.md",
+  "f32": "docs/QUANT-q4g32a.md",
+  "u32": "little-endian uint32"
+ },
+ "quant_recipe": {
+  "name": "lma-test",
+  "rules": [
+   [
+    "qkv_proj|rows8",
+    "q8g64s"
+   ],
+   [
+    ".",
+    "q4g32a"
+   ]
+  ]
+ },
+ "sources": [],
+ "license": {
+  "spdx": "CC0-1.0"
+ },
+ "shards": [
+  {
+   "name": "lm.global",
+   "file": "lm.global.pfw",
+   "kind": "lm_global",
+   "bytes": 14336,
+   "sha256": "12237067faf7d654b8d31ae1cf358c13c902682a46129b3112a51379142386b8",
+   "chunk_bytes": 4096,
+   "chunk_sha256": [
+    "c8df7a49508fb166afbb65bd3a44ae9f16f1a7e2f0615e840b812670020e19bd",
+    "206e03c6d7509025c63fe837c2a905c5eb0a39abf0e6beba864a6e87904a599e",
+    "7992bd5424870634e213fa928bd5c1d172baf6e51f3ef95f28f6e7ef51717eab",
+    "5a7ccaf069ba5d27e90d8e2449e0e47ba193c4cc05dfc07736e452450fda541b"
+   ]
+  },
+  {
+   "name": "ple.rows",
+   "file": "ple.rows.pfw",
+   "kind": "ple_rows",
+   "bytes": 1824,
+   "sha256": "e8c6c1cca9f4784ea39d989fab15f41ff4cbc1d9132f24d52f88563a848ef510",
+   "chunk_bytes": 4096,
+   "chunk_sha256": [
+    "e8c6c1cca9f4784ea39d989fab15f41ff4cbc1d9132f24d52f88563a848ef510"
+   ]
+  },
+  {
+   "name": "tokenizer.meta",
+   "file": "tokenizer/tokenizer_meta.json",
+   "kind": "file",
+   "bytes": 111,
+   "sha256": "402b8a66b0841b0ae920d1f0d7bca0fc806794abedcdb4309786a9eb9830c3cf",
+   "chunk_bytes": 4096,
+   "chunk_sha256": [
+    "402b8a66b0841b0ae920d1f0d7bca0fc806794abedcdb4309786a9eb9830c3cf"
+   ]
+  }
+ ],
+ "tensors": {
+  "layers.0.mlp.gate_up_proj.weight": {
+   "shard": "lm.global",
+   "offset": 0,
+   "bytes": 5120,
+   "shape": [
+    128,
+    64
+   ],
+   "enc": "q4g32a.t64",
+   "src": [
+    {
+     "name": "layers.0.mlp.gate_up_proj.weight"
+    }
+   ]
+  },
+  "layers.0.self_attn.qkv_proj.weight": {
+   "shard": "lm.global",
+   "offset": 5120,
+   "bytes": 8448,
+   "shape": [
+    64,
+    128
+   ],
+   "enc": "q8g64s.t64",
+   "src": [
+    {
+     "name": "layers.0.self_attn.qkv_proj.weight"
+    }
+   ]
+  },
+  "norm.weight": {
+   "shard": "lm.global",
+   "offset": 13568,
+   "bytes": 256,
+   "shape": [
+    64
+   ],
+   "enc": "f32",
+   "src": [
+    {
+     "name": "norm.weight"
+    }
+   ]
+  },
+  "position_table": {
+   "shard": "lm.global",
+   "offset": 13824,
+   "bytes": 256,
+   "shape": [
+    8,
+    16
+   ],
+   "enc": "f16",
+   "src": [
+    {
+     "name": "position_table"
+    }
+   ]
+  },
+  "token_ordering": {
+   "shard": "lm.global",
+   "offset": 14080,
+   "bytes": 256,
+   "shape": [
+    64
+   ],
+   "enc": "u32",
+   "src": [
+    {
+     "name": "token_ordering"
+    }
+   ]
+  },
+  "embed_tokens_per_layer.weight": {
+   "shard": "ple.rows",
+   "offset": 0,
+   "bytes": 640,
+   "shape": [
+    16,
+    64
+   ],
+   "enc": "q4g32a.rows",
+   "src": [
+    {
+     "name": "embed_tokens_per_layer.weight"
+    }
+   ]
+  },
+  "embed_rows_q8": {
+   "shard": "ple.rows",
+   "offset": 768,
+   "bytes": 1056,
+   "shape": [
+    8,
+    128
+   ],
+   "enc": "q8g64s.rows",
+   "src": [
+    {
+     "name": "embed_rows_q8"
+    }
+   ]
+  }
+ }
+}
